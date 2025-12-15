@@ -41,7 +41,9 @@ if (notesContainer && notes.length === 0) {
                         100
                       )}...</p>
                       <div id="card-btn">
-                        <a href="#"><button>Read</button></a>
+                        <a href="read.htm?id=${
+                          note.id
+                        }"><button>Read</button></a>
                         <button class="del-btn">Delete</button>
                       </div>
                     </article>`;

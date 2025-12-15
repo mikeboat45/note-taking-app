@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Note Taking App</title>
+    <link rel="shortcut icon" href="tab-icon.svg" type="image/x-icon" />
+  </head>
+  <body>
+    <header>
+      <img src="" alt="" id="logo" />
+      <p>Note Taking App</p>
+    </header>
+
+    <main>
+      <div id="read-container">
+        <!--content goes here-->
+      </div>
+    </main>
+
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const noteId = urlParams.get("id");
+
+      let notes = JSON.parse(localStorage.getItem("notes")) || [];
+
+      const currentNote = notes.find((note) => {
+        note.id == noteId;
+      });
+
+      const container = document.getElementById("read-container");
+
+      const addToContainer = `
+            <h2>${currentNote.title}</h2>
+            <p>${currentNote.content}</p>
+            <button class="del-btn">Delete</button>
+            `;
+
+      container.insertAdjacentHTML("afterbegin", addToContainer);
+    </script>
+  </body>
+</html>
