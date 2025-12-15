@@ -1,3 +1,10 @@
+// A simple function to escape HTML special characters
+function escapeHTML(str) {
+  const p = document.createElement("p");
+  p.textContent = str;
+  return p.innerHTML;
+}
+
 const takeNote = document.getElementById("write-btn");
 
 takeNote.addEventListener("click", function (e) {
@@ -19,20 +26,25 @@ if (notesContainer && notes.length === 0) {
 
   notesContainer.appendChild(textDisplay);
 } else {
+  let allNotesHTML = "";
   notes.forEach((note) => {
-    const cardHTML = `<article class="card">
-                          <h2 class="title">${note.title}</h2>
-                          <p>${note.date}</p>
-                          <p class="content">${note.content.substring(
-                            0,
-                            100
-                          )}...</p>
-                          <div id="card-btn">
-                            <a href="#"><button>Read</button></a>
-                            <button class="del-btn">Delete</button>
-                          </div>
-                        </article>`;
+    // cleaning user input before inserting it into the HTML string
+    const cleanTitle = escapeHTML(note.title);
+    const cleanContent = escapeHTML(note.content);
+    const cleanDate = escapeHTML(note.date);
 
-    notesContainer.insertAdjacentHTML("afterbegin", cardHTML);
+    allNotesHTML += `<article class="card">
+                      <h2 class="title">${cleanTitle}</h2>
+                      <p>${cleanDate}</p>
+                      <p class="content">${cleanContent.substring(
+                        0,
+                        100
+                      )}...</p>
+                      <div id="card-btn">
+                        <a href="#"><button>Read</button></a>
+                        <button class="del-btn">Delete</button>
+                      </div>
+                    </article>`;
   });
+  notesContainer.innerHTML = allNotesHTML;
 }
