@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Note Taking App</title>
+    <link rel="shortcut icon" href="tab-icon.svg" type="image/x-icon" />
+  </head>
+  <body>
+    <header>
+      <img src="" alt="" id="logo" />
+      <p>Note Taking App</p>
+    </header>
+
+    <main>
+      <form action="/submit-form" method="post" id="form">
+        <label for="note-head"
+          >Title:
+          <input type="text" name="note-head" id="note-head" />
+        </label>
+        <label for="note-content"
+          >Content:
+          <textarea
+            name="note-content"
+            id="note-content"
+            cols="30"
+            rows="10"
+          ></textarea>
+        </label>
+
+        <input type="submit" value="Create Note" id="create-btn" />
+      </form>
+    </main>
+
+    <script src="create.js
+    "></script>
+  </body>
+</html>
