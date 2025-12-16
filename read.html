@@ -13,30 +13,54 @@
     </header>
 
     <main>
+      <i class="fa-solid fa-arrow-left"></i>
       <div id="read-container">
         <!--content goes here-->
+      </div>
+      <div>
+        <button class="del-btn">Delete</button>
+        <button class="edit-btn">Edit</button>
       </div>
     </main>
 
     <script>
+      function escapeHTML(str) {
+        const p = document.createElement("p");
+        p.textContent = str;
+        return p.innerHTML;
+      }
+
       const urlParams = new URLSearchParams(window.location.search);
       const noteId = urlParams.get("id");
 
       let notes = JSON.parse(localStorage.getItem("notes")) || [];
 
       const currentNote = notes.find((note) => {
-        note.id == noteId;
+        return note.id == Number(noteId);
       });
 
       const container = document.getElementById("read-container");
 
-      const addToContainer = `
-            <h2>${currentNote.title}</h2>
-            <p>${currentNote.content}</p>
-            <button class="del-btn">Delete</button>
-            `;
+      if (currentNote) {
+        const cleanTitle = escapeHTML(currentNote.title);
+        const cleanContent = escapeHTML(currentNote.content);
 
-      container.insertAdjacentHTML("afterbegin", addToContainer);
+        const noteHTML = `
+            <h2?${cleanTitle}</h2>
+            <p>${cleanContent}</p>
+            
+        `;
+
+        container.innerHTML = noteHTML;
+      }
+
+      //   const addToContainer = `
+      //         <h2>${currentNote.title}</h2>
+      //         <p>${currentNote.content}</p>
+      //         <button class="del-btn">Delete</button>
+      //         `;
+
+      //   container.insertAdjacentHTML("afterbegin", addToContainer);
     </script>
   </body>
 </html>
