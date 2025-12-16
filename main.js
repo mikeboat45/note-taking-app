@@ -9,9 +9,7 @@ const takeNote = document.getElementById("write-btn");
 const notesContainer = document.getElementById("notes-container");
 let notes = JSON.parse(localStorage.getItem("notes")) || [];
 
-// --- Central Render Function ---
 function render() {
-  // Start with a clean slate
   notesContainer.innerHTML = "";
 
   if (notes.length === 0) {
@@ -36,10 +34,10 @@ function render() {
                           0,
                           100
                         )}...</p>
-                        <div id="card-btn">
-                          <a href="read.html?id=${
+                        <div class="card-buttons">
+                          <button class="read-btn" data-id="${
                             note.id
-                          }"><button>Read</button></a>
+                          }">Read</button>
                           <button class="del-btn" data-id="${
                             note.id
                           }">Delete</button>
@@ -55,7 +53,7 @@ takeNote.addEventListener("click", function (e) {
   window.location.href = "create.html";
 });
 
-// Delete button functionality
+// Handle clicks on Read and Delete buttons
 notesContainer.addEventListener("click", function (event) {
   const clickedElement = event.target;
 
@@ -67,6 +65,9 @@ notesContainer.addEventListener("click", function (event) {
     alert("Note deleted");
 
     render();
+  } else if (clickedElement.matches(".read-btn")) {
+    const buttonId = clickedElement.getAttribute("data-id");
+    window.location.href = `read.html?id=${buttonId}`;
   }
 });
 
