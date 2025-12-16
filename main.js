@@ -6,82 +6,68 @@ function escapeHTML(str) {
 }
 
 const takeNote = document.getElementById("write-btn");
+const notesContainer = document.getElementById("notes-container");
+let notes = JSON.parse(localStorage.getItem("notes")) || [];
+
+// --- Central Render Function ---
+function render() {
+  // Start with a clean slate
+  notesContainer.innerHTML = "";
+
+  if (notes.length === 0) {
+    // Display the "empty" message
+    const textDisplay = document.createElement("p");
+    textDisplay.textContent = "Write something today!";
+    textDisplay.style.font = "italic";
+    textDisplay.style.textAlign = "center";
+    notesContainer.appendChild(textDisplay);
+  } else {
+    // Build and display all the note cards
+    let allNotesHTML = "";
+    notes.forEach((note) => {
+      const cleanTitle = escapeHTML(note.title);
+      const cleanContent = escapeHTML(note.content);
+      const cleanDate = escapeHTML(note.date);
+
+      allNotesHTML += `<article class="card">
+                        <h2 class="title">${cleanTitle}</h2>
+                        <p>${cleanDate}</p>
+                        <p class="content">${cleanContent.substring(
+                          0,
+                          100
+                        )}...</p>
+                        <div id="card-btn">
+                          <a href="read.html?id=${
+                            note.id
+                          }"><button>Read</button></a>
+                          <button class="del-btn" data-id="${
+                            note.id
+                          }">Delete</button>
+                        </div>
+                      </article>`;
+    });
+    notesContainer.innerHTML = allNotesHTML;
+  }
+}
 
 takeNote.addEventListener("click", function (e) {
   e.preventDefault();
-
   window.location.href = "create.html";
 });
 
-const notesContainer = document.getElementById("notes-container");
-
-let notes = JSON.parse(localStorage.getItem("notes")) || [];
-
-if (notesContainer && notes.length === 0) {
-  const textDisplay = document.createElement("p");
-  textDisplay.textContent = "Write something today!";
-
-  textDisplay.style.font = "italic";
-  textDisplay.style.textAlign = "center";
-
-  notesContainer.appendChild(textDisplay);
-} else {
-  let allNotesHTML = "";
-  notes.forEach((note) => {
-    // cleaning user input before inserting it into the HTML string
-    const cleanTitle = escapeHTML(note.title);
-    const cleanContent = escapeHTML(note.content);
-    const cleanDate = escapeHTML(note.date);
-
-    allNotesHTML += `<article class="card">
-                      <h2 class="title">${cleanTitle}</h2>
-                      <p>${cleanDate}</p>
-                      <p class="content">${cleanContent.substring(
-                        0,
-                        100
-                      )}...</p>
-                      <div id="card-btn">
-                        <a href="read.html?id=${
-                          note.id
-                        }"><button>Read</button></a>
-                        <button class="del-btn" data-id="${
-                          note.id
-                        }">Delete</button>
-                      </div>
-                    </article>`;
-  });
-  notesContainer.innerHTML = allNotesHTML;
-}
-
-// delete button functionality
+// Delete button functionality
 notesContainer.addEventListener("click", function (event) {
   const clickedElement = event.target;
 
   if (clickedElement.matches(".del-btn")) {
     const buttonId = clickedElement.getAttribute("data-id");
 
-    const updatedNotes = notes.filter((note) => note.id != Number(buttonId));
-
-    localStorage.setItem("notes", JSON.stringify(updatedNotes));
-
-    // Remove the card from the DOM
-    const card = clickedElement.closest(".card");
-    if (card) {
-      card.remove();
-    }
-
-    // Update the notes array in the current scope
-    notes = updatedNotes;
+    notes = notes.filter((note) => note.id != Number(buttonId));
+    localStorage.setItem("notes", JSON.stringify(notes));
     alert("Note deleted");
 
-    // If the last note was deleted, display the empty message
-    if (notes.length === 0) {
-      const textDisplay = document.createElement("p");
-      textDisplay.textContent = "Write something today!";
-      textDisplay.style.font = "italic";
-      textDisplay.style.textAlign = "center";
-      notesContainer.innerHTML = "";
-      notesContainer.appendChild(textDisplay);
-    }
+    render();
   }
 });
+
+render();
