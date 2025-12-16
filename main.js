@@ -44,9 +44,44 @@ if (notesContainer && notes.length === 0) {
                         <a href="read.html?id=${
                           note.id
                         }"><button>Read</button></a>
-                        <button class="del-btn">Delete</button>
+                        <button class="del-btn" data-id="${
+                          note.id
+                        }">Delete</button>
                       </div>
                     </article>`;
   });
   notesContainer.innerHTML = allNotesHTML;
 }
+
+// delete button functionality
+notesContainer.addEventListener("click", function (event) {
+  const clickedElement = event.target;
+
+  if (clickedElement.matches(".del-btn")) {
+    const buttonId = clickedElement.getAttribute("data-id");
+
+    const updatedNotes = notes.filter((note) => note.id != Number(buttonId));
+
+    localStorage.setItem("notes", JSON.stringify(updatedNotes));
+
+    // Remove the card from the DOM
+    const card = clickedElement.closest(".card");
+    if (card) {
+      card.remove();
+    }
+
+    // Update the notes array in the current scope
+    notes = updatedNotes;
+    alert("Note deleted");
+
+    // If the last note was deleted, display the empty message
+    if (notes.length === 0) {
+      const textDisplay = document.createElement("p");
+      textDisplay.textContent = "Write something today!";
+      textDisplay.style.font = "italic";
+      textDisplay.style.textAlign = "center";
+      notesContainer.innerHTML = "";
+      notesContainer.appendChild(textDisplay);
+    }
+  }
+});

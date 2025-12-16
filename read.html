@@ -5,21 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Note Taking App</title>
     <link rel="shortcut icon" href="tab-icon.svg" type="image/x-icon" />
+    <script
+      src="https://kit.fontawesome.com/055e77e62f.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
     <header>
-      <img src="" alt="" id="logo" />
+      <i class="fa-regular fa-file"></i>
       <p>Note Taking App</p>
     </header>
 
     <main>
-      <i class="fa-solid fa-arrow-left"></i>
+      <a href="index.html"><i class="fa-solid fa-arrow-left"></i></a>
       <div id="read-container">
         <!--content goes here-->
       </div>
       <div>
-        <button class="del-btn">Delete</button>
-        <button class="edit-btn">Edit</button>
+        <button id="del-btn">Delete</button>
+        <button id="edit-btn">Edit</button>
       </div>
     </main>
 
@@ -54,13 +58,19 @@
         container.innerHTML = noteHTML;
       }
 
-      //   const addToContainer = `
-      //         <h2>${currentNote.title}</h2>
-      //         <p>${currentNote.content}</p>
-      //         <button class="del-btn">Delete</button>
-      //         `;
+      // delete button functionality
+      const deleteButton = document.getElementById("del-btn");
 
-      //   container.insertAdjacentHTML("afterbegin", addToContainer);
+      deleteButton.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        const updatedNotes = notes.filter((note) => note.id != Number(noteId));
+
+        localStorage.setItem("notes", JSON.stringify(updatedNotes));
+        alert("Note deleted");
+
+        window.location.href = "index.html";
+      });
     </script>
   </body>
 </html>
