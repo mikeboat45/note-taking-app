@@ -16,8 +16,7 @@ function render() {
     // Display the "empty" message
     const textDisplay = document.createElement("p");
     textDisplay.textContent = "Write something today!";
-    textDisplay.style.font = "italic";
-    textDisplay.style.textAlign = "center";
+    textDisplay.className = "text-center text-gray-500 italic";
     notesContainer.appendChild(textDisplay);
   } else {
     // Build and display all the note cards
@@ -27,18 +26,20 @@ function render() {
       const cleanContent = escapeHTML(note.content);
       const cleanDate = escapeHTML(note.date);
 
-      allNotesHTML += `<article class="card">
-                        <h2 class="title">${cleanTitle}</h2>
-                        <p>${cleanDate}</p>
-                        <p class="content">${cleanContent.substring(
-                          0,
-                          100
-                        )}...</p>
-                        <div class="card-buttons">
-                          <button class="read-btn" data-id="${
+      allNotesHTML += `<article class="bg-white rounded-lg shadow-md p-6 flex flex-col justify-between">
+                        <div>
+                          <h2 class="text-xl font-bold text-gray-800 mb-2">${cleanTitle}</h2>
+                          <p class="text-sm text-gray-500 mb-4">${cleanDate}</p>
+                          <p class="text-gray-700">${cleanContent.substring(
+                            0,
+                            100
+                          )}...</p>
+                        </div>
+                        <div class="mt-6 flex space-x-2">
+                          <button class="read-btn bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded text-sm" data-id="${
                             note.id
                           }">Read</button>
-                          <button class="del-btn" data-id="${
+                          <button class="del-btn bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded text-sm" data-id="${
                             note.id
                           }">Delete</button>
                         </div>

@@ -5,18 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Note Taking App</title>
     <link rel="shortcut icon" href="tab-icon.svg" type="image/x-icon" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script
+      src="https://kit.fontawesome.com/055e77e62f.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
-  <body>
-    <header>
-      <img src="" alt="" id="logo" />
-      <p>Note Taking App</p>
+  <body class="bg-gray-100 font-sans">
+    <header class="bg-white shadow p-4 flex items-center space-x-2">
+      <i class="fa-regular fa-file text-blue-500"></i>
+      <p class="font-semibold">Note Taking App</p>
     </header>
 
-    <main>
-      <div id="notes-container">
+    <main class="max-w-7xl mx-auto mt-10 p-4">
+      <div id="notes-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         <!--note cards go here-->
       </div>
-      <button id="write-btn">Write something...</button>
+      <button id="write-btn" class="fixed bottom-10 right-10 bg-blue-500 hover:bg-blue-600 text-white font-bold text-2xl w-16 h-16 rounded-full shadow-lg flex items-center justify-center">
+        <i class="fa-solid fa-plus"></i>
+      </button>
     </main>
 
     <script src="main.js"></script>
