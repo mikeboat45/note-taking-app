@@ -26,7 +26,7 @@
       </div>
       <div class="flex space-x-4 mt-6">
         <button id="del-btn" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors duration-200">Delete</button>
-        <button id="edit-btn" class="bg-gray-500 cursor-not-allowed text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" disabled>Edit (Coming Soon)</button>
+        <button id="edit-btn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Edit</button>
       </div>
     </main>
 
@@ -62,8 +62,9 @@
         container.innerHTML = `<p class="text-center text-gray-500">Note not found.</p>`;
       }
 
-      // delete button functionality
+      // button functionality
       const deleteButton = document.getElementById("del-btn");
+      const editButton = document.getElementById("edit-btn");
 
       deleteButton.addEventListener("click", function (e) {
         e.preventDefault();
@@ -77,6 +78,11 @@
             window.location.href = "index.html";
         }
       });
+
+      editButton.addEventListener("click", function(e) {
+        e.preventDefault();
+        window.location.href = `edit.html?id=${noteId}`;
+      })
     </script>
   </body>
 </html>
