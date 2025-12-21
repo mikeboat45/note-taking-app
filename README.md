@@ -29,7 +29,7 @@ HTML5, Tailwind CSS, JavaScript
 
 ## How to Run Locally
 1. Clone the repository
-```git clone https://github.com/mikeboat45/ ```
+```git clone https://github.com/mikeboat45/note-taking-app ```
 
 2. Navigate to the project folder
 ```cd note-taking-app```
